@@ -16,7 +16,7 @@ func render(_ size: Int) throws -> Data {
     NSBezierPath(roundedRect: NSRect(x: 64, y: 64, width: 896, height: 896), xRadius: 202, yRadius: 202).fill()
     let red = NSColor(calibratedRed: 0.94, green: 0.31, blue: 0.26, alpha: 1)
     red.withAlphaComponent(0.15).setStroke()
-    for radius in [CGFloat(270), 340] {
+    for radius in [CGFloat(270), CGFloat(340)] {
         let ring = NSBezierPath(ovalIn: NSRect(x: 512-radius, y: 512-radius, width: radius*2, height: radius*2))
         ring.lineWidth = 3; ring.stroke()
     }

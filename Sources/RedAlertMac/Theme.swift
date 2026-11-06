@@ -78,7 +78,7 @@ struct RadarScreen: View {
         TimelineView(.animation(minimumInterval: 0.08, paused: reduceMotion)) { timeline in
             Canvas { ctx, size in
                 let c = CGPoint(x: size.width/2, y: size.height/2), r = min(size.width, size.height)/2 - 3
-                for factor in [CGFloat(0.33), 0.66, 1] {
+                for factor in [CGFloat(0.33), CGFloat(0.66), CGFloat(1)] {
                     ctx.stroke(Path(ellipseIn: CGRect(x: c.x-r*factor, y: c.y-r*factor, width: r*2*factor, height: r*2*factor)), with: .color(Theme.green.opacity(0.22)), lineWidth: 0.6)
                 }
                 var axes = Path(); axes.move(to: .init(x: c.x-r, y: c.y)); axes.addLine(to: .init(x: c.x+r, y: c.y)); axes.move(to: .init(x: c.x, y: c.y-r)); axes.addLine(to: .init(x: c.x, y: c.y+r))
@@ -117,7 +117,7 @@ struct BattlefieldArt: View {
             for y in stride(from: CGFloat(0), through: h, by: 32) { grid.move(to: .init(x: 0, y: y)); grid.addLine(to: .init(x: w, y: y)) }
             ctx.stroke(grid, with: .color(color.opacity(0.09)), lineWidth: 0.6)
             let center = CGPoint(x: w * 0.67, y: h * 0.52)
-            for r in [CGFloat(68), 110, 150] {
+            for r in [CGFloat(68), CGFloat(110), CGFloat(150)] {
                 let circle = Path(ellipseIn: .init(x: center.x - r, y: center.y - r, width: r * 2, height: r * 2))
                 ctx.stroke(circle, with: .color(color.opacity(0.16)), style: StrokeStyle(lineWidth: 1, dash: r == 110 ? [4, 7] : []))
             }
