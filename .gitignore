@@ -1,0 +1,10 @@
+.build/
+dist/
+.DS_Store
+.cache/
+vendor/*
+!vendor/README.md
+*.log
+Sources/RedAlertMac/Resources/Compatibility/ddraw.dll
+Sources/RedAlertMac/Resources/Tools/7zz
+*.xcodeproj/
