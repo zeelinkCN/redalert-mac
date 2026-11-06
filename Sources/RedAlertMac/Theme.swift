@@ -76,24 +76,42 @@ struct RadarScreen: View {
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     var body: some View {
         TimelineView(.animation(minimumInterval: 0.08, paused: reduceMotion)) { timeline in
-            Canvas { ctx, size in
-                let c = CGPoint(x: size.width/2, y: size.height/2), r = min(size.width, size.height)/2 - 3
-                for factor in [CGFloat(0.33), CGFloat(0.66), CGFloat(1)] {
-                    ctx.stroke(Path(ellipseIn: CGRect(x: c.x-r*factor, y: c.y-r*factor, width: r*2*factor, height: r*2*factor)), with: .color(Theme.green.opacity(0.22)), lineWidth: 0.6)
-                }
-                var axes = Path(); axes.move(to: .init(x: c.x-r, y: c.y)); axes.addLine(to: .init(x: c.x+r, y: c.y)); axes.move(to: .init(x: c.x, y: c.y-r)); axes.addLine(to: .init(x: c.x, y: c.y+r))
-                ctx.stroke(axes, with: .color(Theme.green.opacity(0.18)), lineWidth: 0.6)
-                let angle = timeline.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 6) / 6 * .pi * 2
-                for i in 0..<24 {
-                    let a = angle - Double(i)*0.025
-                    var ray = Path(); ray.move(to: c); ray.addLine(to: .init(x: c.x + cos(a)*r, y: c.y + sin(a)*r))
-                    ctx.stroke(ray, with: .color(Theme.green.opacity(0.2 * (1-Double(i)/24))), lineWidth: 1.5)
-                }
-                for point in [CGPoint(x: c.x-r*0.3, y: c.y+r*0.45), .init(x: c.x+r*0.5, y: c.y-r*0.25)] {
-                    ctx.fill(Path(CGRect(x: point.x, y: point.y, width: 2.5, height: 2.5)), with: .color(Theme.green.opacity(0.8)))
-                }
-            }
+            Canvas { context, size in drawRadar(context, size: size, date: timeline.date) }
         }.accessibilityLabel("动态雷达装饰")
+    }
+
+    private func drawRadar(_ context: GraphicsContext, size: CGSize, date: Date) {
+        let center = CGPoint(x: size.width / 2, y: size.height / 2)
+        let radius: CGFloat = min(size.width, size.height) / 2 - 3
+        let factors: [CGFloat] = [0.33, 0.66, 1]
+        for factor in factors {
+            let scaled = radius * factor
+            let rect = CGRect(x: center.x - scaled, y: center.y - scaled, width: scaled * 2, height: scaled * 2)
+            context.stroke(Path(ellipseIn: rect), with: .color(Theme.green.opacity(0.22)), lineWidth: 0.6)
+        }
+        var axes = Path()
+        axes.move(to: CGPoint(x: center.x - radius, y: center.y))
+        axes.addLine(to: CGPoint(x: center.x + radius, y: center.y))
+        axes.move(to: CGPoint(x: center.x, y: center.y - radius))
+        axes.addLine(to: CGPoint(x: center.x, y: center.y + radius))
+        context.stroke(axes, with: .color(Theme.green.opacity(0.18)), lineWidth: 0.6)
+        let seconds = date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 6)
+        let angle: Double = seconds / 6 * Double.pi * 2
+        for index in 0..<24 {
+            let theta = angle - Double(index) * 0.025
+            let end = CGPoint(x: center.x + CGFloat(cos(theta)) * radius, y: center.y + CGFloat(sin(theta)) * radius)
+            var ray = Path(); ray.move(to: center); ray.addLine(to: end)
+            let opacity: Double = 0.2 * (1 - Double(index) / 24)
+            context.stroke(ray, with: .color(Theme.green.opacity(opacity)), lineWidth: 1.5)
+        }
+        let points: [CGPoint] = [
+            CGPoint(x: center.x - radius * 0.3, y: center.y + radius * 0.45),
+            CGPoint(x: center.x + radius * 0.5, y: center.y - radius * 0.25)
+        ]
+        for point in points {
+            let rect = CGRect(x: point.x, y: point.y, width: 2.5, height: 2.5)
+            context.fill(Path(rect), with: .color(Theme.green.opacity(0.8)))
+        }
     }
 }
 
