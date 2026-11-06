@@ -21,7 +21,7 @@ cp -R "$binary_dir/RedAlertMac_RedAlertMac.bundle" "$app_dir/Contents/Resources/
 swift -sdk "$redalert_sdk" scripts/MakeIcon.swift "$project_root/.build/AppIcon.iconset"
 iconutil -c icns "$project_root/.build/AppIcon.iconset" -o "$app_dir/Contents/Resources/AppIcon.icns"
 cp scripts/Info.plist "$app_dir/Contents/Info.plist"
-cp THIRD_PARTY_NOTICES.md "$app_dir/Contents/Resources/"
+cp LICENSE THIRD_PARTY_NOTICES.md "$app_dir/Contents/Resources/"
 codesign --force --sign - "$app_dir"
 codesign --verify --deep --strict "$app_dir"
 final_app="$project_root/dist/红警作战中心.app"

@@ -47,5 +47,13 @@ if not valid(tool, '8e495531e1b2b8cb169ca583493922d4ab386007756418c15b95f07f642c
         tool.write_bytes(package.extractfile(member).read())
     tool.chmod(0o755)
 
+source = resources / 'Tools/7z2605-src.tar.xz'
+if not valid(source, '0b6080b8c3e7a579161d2d495224c0e51c467576cb4c7048b0ab485ef44cc22e'):
+    print('Downloading corresponding 7-Zip 26.05 source for redistribution…', flush=True)
+    archive = fetch('https://github.com/ip7z/7zip/releases/download/26.05/7z2605-src.tar.xz',
+                    '0b6080b8c3e7a579161d2d495224c0e51c467576cb4c7048b0ab485ef44cc22e')
+    source.parent.mkdir(parents=True, exist_ok=True)
+    source.write_bytes(archive)
+
 print('Build resources verified. No game data is downloaded for compilation.')
 PY

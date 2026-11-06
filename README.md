@@ -1,15 +1,27 @@
 # 红警作战中心 · RedAlertMac
 
+[![Release](https://img.shields.io/github/v/release/zeelinkCN/redalert-mac?include_prereleases)](https://github.com/zeelinkCN/redalert-mac/releases)
+[![macOS build](https://github.com/zeelinkCN/redalert-mac/actions/workflows/macos.yml/badge.svg)](https://github.com/zeelinkCN/redalert-mac/actions/workflows/macos.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 原生 macOS 红警客户端，启动**原版 Windows 红警程序**。默认提供红色警戒 2、尤里的复仇、共和国之辉的简体中文部署配置，也可管理其他 RA2 / 尤里 MOD。
+
+Native macOS launcher for **Command & Conquer: Red Alert 2**, **Yuri's Revenge** and the classic **共和国之辉** MOD. Built with SwiftUI; runs the original games through Wine, with automatic runtime setup and Simplified Chinese resources.
 
 采用 **SwiftUI 客户端 → Wine WoW64 → 原版 EXE + 原版 MIX 资源**。游戏规则、战斗、战役和存档由原游戏负责；本项目没有重写红警引擎。
 
-## 本地使用
+## 下载与使用
 
-1. 双击 `dist/红警作战中心.app`。
+当前版本：[v0.1.0 预览版](https://github.com/zeelinkCN/redalert-mac/releases/tag/v0.1.0)，支持 **Apple Silicon Mac（M1 及更新芯片），macOS 13+**。
+
+1. 从 [GitHub Releases](https://github.com/zeelinkCN/redalert-mac/releases) 下载 `RedAlertMac-v0.1.0-macos-arm64.dmg`，打开后将「红警作战中心」拖入 Applications，再从启动台打开。
 2. 选择默认版本，点击「开始作战」。尚未部署的版本点击「下载并部署」，客户端自动下载、校验、解包、安装中文资源和音乐。
 3. Wine、Rosetta、32 位运行能力检测、原版组件注册和独立 Windows 环境均自动处理。
 4. 默认无边框全屏，分辨率跟随当前显示器。按 **Ctrl + Tab** 释放鼠标；**Option + Enter** 切换窗口 / 全屏；**Command + Tab** 切换应用。
+
+日常使用不需要终端、Homebrew、Swift 或手动安装 Wine。首次部署需要联网下载运行环境和所选版本资源；默认游戏部署面向已拥有对应游戏的用户。
+
+预览包使用 ad-hoc 签名，尚未经过 Apple Developer ID 签名和公证。macOS 如拦截打开，请按系统提示在「系统设置 → 隐私与安全」允许打开。
 
 默认资源保存在本机独立游戏库，默认分发包提供遭遇战和原有联机入口，**不包含完整战役及过场动画**。联机账号与服务可用性由原服务提供。已有完整版可通过「导入游戏」建立额外档案。
 
@@ -49,7 +61,7 @@ Mac 的 Option 键对应游戏里的 Alt。全屏使用当前显示器的逻辑�
 ./scripts/package-dmg.sh
 ```
 
-产物为当前 Mac 架构的 `dist/红警作战中心.app`，经过本地 ad-hoc 签名。对外分发还需 Developer ID 签名和公证。源码支持 Intel / Apple Silicon，但这里的实际构建与检查在 Apple Silicon 上执行。
+产物为当前 Mac 架构的 `dist/红警作战中心.app`，经过本地 ad-hoc 签名。源码可为 Intel / Apple Silicon 编译；当前发布的 DMG 与本机运行检查仅覆盖 Apple Silicon，尚未提供 Intel 安装包。
 
 脚本在本机优先使用已安装的稳定 macOS 26.5 SDK：当前预览版 CLT 27.2 缺少 SwiftUI State 宏插件。其他机器默认使用所选 SDK，也可用 `REDALERT_SDK=/path/to/MacOSX.sdk` 覆盖。
 
@@ -83,3 +95,9 @@ Mac 的 Option 键对应游戏里的 Alt。全屏使用当前显示器的逻辑�
 当前没有接入红警 1、红警 3、独立匹配服务器或 MOD 下载市场。后续可为红警 1 接入 [Vanilla Conquer](https://github.com/TheAssemblyArmada/Vanilla-Conquer) 的原引擎移植，为红警 3 建立独立图形和启动配置。
 
 参考项目与许可证见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)，技术选择见 [docs/architecture.md](docs/architecture.md)。
+
+## 开源许可证
+
+本项目原创客户端代码采用 [MIT License](LICENSE)，可使用、修改和再分发，并保留许可证及版权声明。第三方组件与游戏资源沿用各自许可证，不受本项目 MIT 许可证覆盖；详见 [第三方声明](THIRD_PARTY_NOTICES.md)。发行包附带所用 7-Zip 的完整对应源码。
+
+欢迎通过 [Issues](https://github.com/zeelinkCN/redalert-mac/issues) 反馈兼容性问题。请附 Mac 芯片、macOS 版本、游戏版本与启动日志。

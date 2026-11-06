@@ -7,4 +7,5 @@ vendor/*
 *.log
 Sources/RedAlertMac/Resources/Compatibility/ddraw.dll
 Sources/RedAlertMac/Resources/Tools/7zz
+Sources/RedAlertMac/Resources/Tools/7z2605-src.tar.xz
 *.xcodeproj/

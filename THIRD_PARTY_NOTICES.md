@@ -1,5 +1,7 @@
 # Third-party components
 
+The original launcher source is licensed under the MIT License in `LICENSE`. Third-party components and game data retain their own licenses; the launcher's MIT License does not relicense them.
+
 ## cnc-ddraw 7.1.0.0
 
 - Project: https://github.com/FunkyFr3sh/cnc-ddraw
@@ -35,8 +37,12 @@ Ra2.tlb and Blowfish.tlb are original Westwood runtime type libraries, installed
 - Author: Igor Pavlov, https://www.7-zip.org/.
 - Official macOS universal binary, https://github.com/ip7z/7zip/releases/tag/26.05.
 - Full license: `Sources/RedAlertMac/Resources/Tools/LICENSE.7zip.txt`, included in the application resources. LGPL components and the unRAR restriction apply as described there.
+- The full GNU LGPL v2.1 text is included alongside it as `LICENSE.LGPL-2.1.txt`.
 - The unmodified `7zz` binary is used solely to unpack installers and archives without executing their Windows installation code.
 - Archive SHA-256: `12ef6830317743cfd3f0ab1724bde43fcc270d8b6d8564f8c12c2a2b7f993570`.
+- Complete corresponding upstream source, including build files: https://github.com/ip7z/7zip/releases/download/26.05/7z2605-src.tar.xz. An unchanged copy is included beside `7zz` in the application resource bundle as `Tools/7z2605-src.tar.xz`, and is also attached to the v0.1.0 GitHub Release.
+- Source archive SHA-256: `0b6080b8c3e7a579161d2d495224c0e51c467576cb4c7048b0ab485ef44cc22e`.
+- `7zz` runs as a separate command-line process. It is not linked into the launcher and may be replaced with a compatible build from this source; a changed application bundle needs to be signed again.
 
 RA2Web was reviewed as a reference only: https://github.com/OpenRA2/RA2Web. No source code, game engine, or artwork from RA2Web or Chrono Divide is included.
 
