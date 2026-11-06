@@ -20,7 +20,7 @@
 
 ## Games and reference projects
 
-Command & Conquer, Red Alert, Yuri's Revenge and related assets belong to their respective rights holders. Original games and translated data are installed separately in the user's game library. They are not included in the launcher application bundle or this source tree. The current user has stated they own the games.
+Command & Conquer, Red Alert, Yuri's Revenge and related assets belong to their respective rights holders. Original games and translated data are installed separately in the user's game library. They are not included in the launcher application bundle or the Git repository. Default game installation is intended for users who own the corresponding games.
 
 Default game distributions are preserved copies of the XWIS multiplayer installers originally published at `xwis.net/downloads/`. Downloads use fixed Internet Archive capture URLs and verified SHA-256 digests. These packages supply skirmish and existing multiplayer entry points; they do not supply full campaign media.
 
