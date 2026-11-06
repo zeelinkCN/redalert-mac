@@ -57,6 +57,11 @@ enum Page: String, CaseIterable {
         }
     }
 
+    private func updateBusy(_ message: String) {
+        // A queued progress callback must not reopen a completed setup overlay.
+        if busy != nil { busy = message }
+    }
+
     func prepareAutomatically(thenLaunch: Bool = false) {
         guard busy == nil else { return }
         automaticSetupStarted = true
@@ -65,7 +70,7 @@ enum Page: String, CaseIterable {
         Task {
             do {
                 _ = try await RuntimeManager.ensureReady(paths: paths, customPath: customPath) { message in
-                    Task { @MainActor in self.busy = message }
+                    Task { @MainActor in self.updateBusy(message) }
                 }
                 busy = nil; rosettaReady = true
                 runtimes = RuntimeManager.detect(paths: paths, customPath: customPath)
@@ -88,11 +93,11 @@ enum Page: String, CaseIterable {
         Task {
             do {
                 _ = try await RuntimeManager.ensureReady(paths: paths, customPath: state.customWinePath) { message in
-                    Task { @MainActor in self.busy = message }
+                    Task { @MainActor in self.updateBusy(message) }
                 }
                 let profile = try await DefaultGameInstaller.install(kind: kind, paths: paths, extractor: extractor,
                     modFiles: FileManager.default.fileExists(atPath: modFiles.path) ? modFiles : nil) { message in
-                    Task { @MainActor in self.busy = message }
+                    Task { @MainActor in self.updateBusy(message) }
                 }
                 var next = state; next.profiles.append(profile)
                 do { try persist(next) }
@@ -204,7 +209,7 @@ enum Page: String, CaseIterable {
         Task {
             do {
                 try await RuntimeManager.install(paths: paths, archive: archive) { message in
-                    Task { @MainActor in self.busy = message }
+                    Task { @MainActor in self.updateBusy(message) }
                 }
                 notice = "Wine 已安装。导入游戏后即可启动。"
             } catch { self.error = "安装未完成：\(error.localizedDescription)" }
